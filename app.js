@@ -5,11 +5,103 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var passport = require('passport'),
+    LocalStrategy = require('passport-local').Strategy;
+var mongoose = require('mongoose');
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
+var session = require('express-session');
+var Schema = mongoose.Schema;
 var app = express();
+
+//User Schema
+var userSchema = new Schema({
+    username: {type: String, required: true},
+    password: {type: String, required: true}
+});
+
+var graphSchema = new Schema({
+
+});
+
+var entrySchema = new Schema({
+    guid: {type: String, required: true},
+    plugin_version: {type: String, required: true},
+    server_version: {type: String, required: true},
+    players_online: {type: Number, required: true},
+    osname: {type: String, required: true},
+    osarch: {type: String, required: true},
+    osversion: {type: String, required: true},
+    cores: {type: Number, required: true},
+    auth_mode: {type: Boolean, required: true},
+    java_version: {type: String, required: true},
+    graphSchema: [graphSchema]
+});
+
+var pluginSchema = new Schema({
+    pluginName: {type: String, required: true},
+    entry: [entrySchema]
+});
+
+// Bcrypt middleware
+userSchema.pre('save', function(next) {
+    var user = this;
+
+    if(!user.isModified('password')) return next();
+
+    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+        if(err) return next(err);
+
+        bcrypt.hash(user.password, salt, function(err, hash) {
+            if(err) return next(err);
+            user.password = hash;
+            next();
+        });
+    });
+});
+
+// Password verification
+userSchema.methods.comparePassword = function(candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+        if(err) return cb(err);
+        cb(null, isMatch);
+    });
+};
+
+// Passport session setup.
+//   To support persistent login sessions, Passport needs to be able to
+//   serialize users into and deserialize users out of the session.  Typically,
+//   this will be as simple as storing the user ID when serializing, and finding
+//   the user by ID when deserializing.
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+    User.findById(id, function (err, user) {
+        done(err, user);
+    });
+});
+
+// Use the LocalStrategy within Passport.
+//   Strategies in passport require a `verify` function, which accept
+//   credentials (in this case, a username and password), and invoke a callback
+//   with a user object.  In the real world, this would query a database;
+//   however, in this example we are using a baked-in set of users.
+passport.use(new LocalStrategy(function(username, password, done) {
+    User.findOne({ username: username }, function(err, user) {
+        if (err) { return done(err); }
+        if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
+        user.comparePassword(password, function(err, isMatch) {
+            if (err) return done(err);
+            if(isMatch) {
+                return done(null, user);
+            } else {
+                return done(null, false, { message: 'Invalid password' });
+            }
+        });
+    });
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,6 +113,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session( { secret: '9208efyg98wgc987stdc97sgdc'}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', routes);
 app.use('/users', users);
@@ -56,5 +151,14 @@ app.use(function(err, req, res, next) {
     });
 });
 
+// Simple route middleware to ensure user is authenticated.
+//   Use this route middleware on any resource that needs to be protected.  If
+//   the request is authenticated (typically via a persistent login session),
+//   the request will proceed.  Otherwise, the user will be redirected to the
+//   login page.
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) { return next(); }
+    res.redirect('/login')
+}
 
 module.exports = app;
