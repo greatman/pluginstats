@@ -8,11 +8,16 @@ var bodyParser = require('body-parser');
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
-var routes = require('./routes/index');
-var users = require('./routes/users');
 var session = require('express-session');
 var Schema = mongoose.Schema;
 var app = express();
+
+mongoose.connect('mongodb://localhost/test');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback() {
+    console.log('Connected to DB');
+});
 
 //User Schema
 var userSchema = new Schema({
@@ -42,6 +47,10 @@ var pluginSchema = new Schema({
     pluginName: {type: String, required: true},
     entry: [entrySchema]
 });
+
+//Schema variables
+var User = mongoose.model('User', userSchema);
+mongoose.model('Plugin', pluginSchema);
 
 // Bcrypt middleware
 userSchema.pre('save', function(next) {
@@ -103,6 +112,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
     });
 }));
 
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -117,6 +127,9 @@ app.use(session( { secret: '9208efyg98wgc987stdc97sgdc'}));
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+var routes = require('./routes/index');
+var users = require('./routes/users');
 app.use('/', routes);
 app.use('/users', users);
 
