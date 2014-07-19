@@ -10,6 +10,7 @@ var passport = require('passport'),
 var mongoose = require('mongoose');
 var session = require('express-session');
 var Schema = mongoose.Schema;
+var ObjectId = mongoose.Schema.Types.ObjectId;
 var app = express();
 var mongoUri = process.env.MONGOLAB_URI ||
     process.env.MONGOHQ_URL ||
@@ -24,14 +25,35 @@ db.once('open', function callback() {
 //User Schema
 var userSchema = new Schema({
     username: {type: String, required: true},
-    password: {type: String, required: true}
+    password: {type: String, required: true},
+    plugins: [ObjectId]
+});
+
+var graphEntrySchema = new Schema({
+    plugin: {type: ObjectId, required: true},
+    time: {type: Date, required: true},
+    graphName: {type: String, required: true},
+    value: {type: Mixed, required: true}
+});
+
+//This is the table where servers write their entry. When the cron runs, it then get's converted to a graphEntrySchema
+var graphEntryRaw = new Schema({
+    time: {type: Date, required: true},
+    graphName: {type: String, required: true},
+    value: {type: Mixed, required: true}
 });
 
 var graphSchema = new Schema({
-
+    name: {type: String, required: true},
+    displayName: {type: String},
+    readonly: {type: Boolean, required: true},
+    position: {type: Number, required: true, default: 0},
+    active: {type: Boolean, default: true},
+    type: {type: String, default: 'line'},
+    entries: [graphEntrySchema]
 });
 
-var entrySchema = new Schema({
+var serverSchema = new Schema({
     guid: {type: String, required: true},
     plugin_version: {type: String, required: true},
     server_version: {type: String, required: true},
@@ -42,12 +64,15 @@ var entrySchema = new Schema({
     cores: {type: Number, required: true},
     auth_mode: {type: Boolean, required: true},
     java_version: {type: String, required: true},
-    graphSchema: [graphSchema]
+    graphSchema: [graphEntrySchema]
 });
 
 var pluginSchema = new Schema({
     pluginName: {type: String, required: true},
-    entry: [entrySchema]
+    rank: {type: Number, required: true},
+    lastRank: {type: Number, required: true},
+    servers: [serverSchema],
+    graphs: [graphSchema]
 });
 
 //Schema variables
@@ -132,9 +157,10 @@ app.use(passport.session());
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var plugin = require('./routes/plugin');
 app.use('/', routes);
 app.use('/users', users);
-
+app.user('plugin', plugin)
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
