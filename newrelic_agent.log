@@ -1,0 +1,21 @@
+{"name":"newrelic","hostname":"greatman-PC","pid":4874,"level":30,"msg":"Starting New Relic for Node.js connection process.","time":"2014-07-19T02:24:42.686Z","v":0}
+{"name":"newrelic","hostname":"greatman-PC","pid":4874,"component":"new_relic_response","level":30,"msg":"Reporting to: https://rpm.newrelic.com/accounts/721241/applications/3406408","time":"2014-07-19T02:24:43.294Z","v":0}
+{"name":"newrelic","hostname":"greatman-PC","pid":4874,"component":"collector_api","level":30,"msg":"Connected to collector-120.newrelic.com:443 with agent run ID 841715944.","time":"2014-07-19T02:24:43.294Z","v":0}
+{"name":"newrelic","hostname":"greatman-PC","pid":4901,"level":30,"msg":"Starting New Relic for Node.js connection process.","time":"2014-07-19T02:25:17.428Z","v":0}
+{"name":"newrelic","hostname":"greatman-PC","pid":4901,"component":"new_relic_response","level":30,"msg":"Reporting to: https://rpm.newrelic.com/accounts/721241/applications/3406408","time":"2014-07-19T02:25:18.007Z","v":0}
+{"name":"newrelic","hostname":"greatman-PC","pid":4901,"component":"collector_api","level":30,"msg":"Connected to collector-120.newrelic.com:443 with agent run ID 841716579.","time":"2014-07-19T02:25:18.008Z","v":0}
+{"name":"newrelic","hostname":"greatman-PC","pid":5055,"level":30,"msg":"Starting New Relic for Node.js connection process.","time":"2014-07-19T02:33:10.061Z","v":0}
+{"name":"newrelic","hostname":"greatman-PC","pid":5055,"component":"new_relic_response","level":30,"msg":"Reporting to: https://rpm.newrelic.com/accounts/721241/applications/3406408","time":"2014-07-19T02:33:10.698Z","v":0}
+{"name":"newrelic","hostname":"greatman-PC","pid":5055,"component":"collector_api","level":30,"msg":"Connected to collector-120.newrelic.com:443 with agent run ID 841724419.","time":"2014-07-19T02:33:10.698Z","v":0}
+{"name":"newrelic","hostname":"greatman-PC","pid":5586,"level":30,"msg":"Starting New Relic for Node.js connection process.","time":"2014-07-19T03:00:28.587Z","v":0}
+{"name":"newrelic","hostname":"greatman-PC","pid":5586,"component":"new_relic_response","level":30,"msg":"Reporting to: https://rpm.newrelic.com/accounts/721241/applications/3406408","time":"2014-07-19T03:00:29.175Z","v":0}
+{"name":"newrelic","hostname":"greatman-PC","pid":5586,"component":"collector_api","level":30,"msg":"Connected to collector-120.newrelic.com:443 with agent run ID 841751674.","time":"2014-07-19T03:00:29.175Z","v":0}
+{"name":"newrelic","hostname":"greatman-PC","pid":5660,"level":30,"msg":"Starting New Relic for Node.js connection process.","time":"2014-07-19T03:03:29.924Z","v":0}
+{"name":"newrelic","hostname":"greatman-PC","pid":5660,"component":"new_relic_response","level":30,"msg":"Reporting to: https://rpm.newrelic.com/accounts/721241/applications/3406408","time":"2014-07-19T03:03:30.501Z","v":0}
+{"name":"newrelic","hostname":"greatman-PC","pid":5660,"component":"collector_api","level":30,"msg":"Connected to collector-120.newrelic.com:443 with agent run ID 841757071.","time":"2014-07-19T03:03:30.501Z","v":0}
+{"name":"newrelic","hostname":"greatman-PC","pid":5733,"level":30,"msg":"Starting New Relic for Node.js connection process.","time":"2014-07-19T03:07:41.598Z","v":0}
+{"name":"newrelic","hostname":"greatman-PC","pid":5733,"component":"new_relic_response","level":30,"msg":"Reporting to: https://rpm.newrelic.com/accounts/721241/applications/3406408","time":"2014-07-19T03:07:42.176Z","v":0}
+{"name":"newrelic","hostname":"greatman-PC","pid":5733,"component":"collector_api","level":30,"msg":"Connected to collector-120.newrelic.com:443 with agent run ID 841762600.","time":"2014-07-19T03:07:42.177Z","v":0}
+{"name":"newrelic","hostname":"greatman-PC","pid":5803,"level":30,"msg":"Starting New Relic for Node.js connection process.","time":"2014-07-19T03:11:10.931Z","v":0}
+{"name":"newrelic","hostname":"greatman-PC","pid":5803,"component":"new_relic_response","level":30,"msg":"Reporting to: https://rpm.newrelic.com/accounts/721241/applications/3406408","time":"2014-07-19T03:11:11.499Z","v":0}
+{"name":"newrelic","hostname":"greatman-PC","pid":5803,"component":"collector_api","level":30,"msg":"Connected to collector-120.newrelic.com:443 with agent run ID 841766450.","time":"2014-07-19T03:11:11.499Z","v":0}
