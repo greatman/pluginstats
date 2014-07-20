@@ -4,7 +4,10 @@ var plugin = mongoose.model('Plugin');
 var router = express.Router();
 
 router.get('/', function(req, res) {
-    plugin.find({}).sort({rank: 'desc'}).exec(function(err,doc) {
-        res.render('plugin', {title: 'Statik - Plugin List', pluginList: doc})
+    plugin.find({}).sort({rank: 'asc'}).exec(function(err,doc) {
+        console.log(doc);
+        res.render('pluginindex', {title: 'Statik - Plugin List', pluginList: doc})
     })
 });
+
+module.exports = router;

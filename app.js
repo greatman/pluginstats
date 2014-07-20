@@ -11,7 +11,9 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
+var Mixed = mongoose.Schema.Types.Mixed;
 var app = express();
+
 var mongoUri = process.env.MONGOLAB_URI ||
     process.env.MONGOHQ_URL ||
     'mongodb://localhost/test';
@@ -77,8 +79,7 @@ var pluginSchema = new Schema({
 
 //Schema variables
 var User = mongoose.model('User', userSchema);
-mongoose.model('Plugin', pluginSchema);
-
+var Plugin = mongoose.model('Plugin', pluginSchema);
 // Bcrypt middleware
 userSchema.pre('save', function(next) {
     var user = this;
@@ -160,7 +161,7 @@ var users = require('./routes/users');
 var plugin = require('./routes/plugin');
 app.use('/', routes);
 app.use('/users', users);
-app.user('plugin', plugin)
+app.use('/plugins', plugin);
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
