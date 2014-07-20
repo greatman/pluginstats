@@ -29,7 +29,11 @@ block content
                             tbody
                                 each val, index in pluginList
                                     tr
-                                        td #{val.rank}
+                                        td #{val.rank} &nbsp;
+                                            if val.rank < val.lastRank
+                                                span.fa.fa-arrow-up
+                                            else if val.rank > val.lastRank
+                                                span.fa.fa-arrow-down
                                         td
                                             a(href="/plugins/#{val.pluginName}") #{val.pluginName}
                                         if val.servers.length > 0
