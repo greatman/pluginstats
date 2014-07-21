@@ -9,6 +9,7 @@ var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var session = require('express-session');
+var validator = require('express-validator');
 var Schema = mongoose.Schema;
 var ObjectId = mongoose.Schema.Types.ObjectId;
 var Mixed = mongoose.Schema.Types.Mixed;
@@ -80,6 +81,7 @@ var pluginSchema = new Schema({
 //Schema variables
 var User = mongoose.model('User', userSchema);
 var Plugin = mongoose.model('Plugin', pluginSchema);
+var Server = mongoose.model('Server', serverSchema);
 // Bcrypt middleware
 userSchema.pre('save', function(next) {
     var user = this;

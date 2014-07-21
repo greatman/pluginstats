@@ -5,9 +5,19 @@ var router = express.Router();
 router.get('/1', function(req, res) {
     res.send('respond with a resource');
 });
-router.get('/login', function(req,res) {
-    res.render('login', { title: 'Login' });
+
+router.get('/register', function(req,res) {
+   res.render('register', {title: 'Statik - Register'})
 });
+
+router.post('/register', function(req,res) {
+        if (req.body.username != null)
+});
+
+router.get('/login', function(req,res) {
+    res.render('login', { title: 'Statik - Login' });
+});
+
 router.post('/login', function(req,res) {
     passport.authenticate('local', {
         successRedirect: '/',
@@ -15,4 +25,5 @@ router.post('/login', function(req,res) {
         failureFlash: 'true'
     });
 });
+
 module.exports = router;

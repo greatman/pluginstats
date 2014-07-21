@@ -1,13 +1,14 @@
 var express = require('express');
 var mongoose = require('mongoose');
-var plugin = mongoose.model('Plugin');
+var Plugin = mongoose.model('Plugin');
+var Server = mongoose.model('Server');
 var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res) {
-    plugin.count({}, function(err, c) {
+    Plugin.count({}, function(err, c) {
         console.log(c);
-        plugin.distinct('entry.guid').count({}, function(err, serverCount) {
+        Server.count({}, function(err, serverCount) {
             res.render('index', { title: 'Statik', numberOfPlugins: c, numberOfServers: serverCount });
         });
     });
